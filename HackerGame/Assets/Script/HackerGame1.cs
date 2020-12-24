@@ -7,7 +7,9 @@ public class HackerGame1 : MonoBehaviour
 
     int level;
     string currentScreen = "MainMenu";
-    string testPass;
+    string password;
+    string [] level1Pass = { "Buckeyes", "Brutus", "Ohio", "Flyers"};
+    string[] level2Pass = {"Harbor", "Michigan", "Snow", "Spartans"};
 
   // Start is called before the first frame update
 void Start()
@@ -30,22 +32,15 @@ void ShowMainMenu(string greeting) {
         {
 
             level = 1;
-            Terminal.WriteLine("You selected level 1");
-            //SetRandomPass();
+            StartGame();
 
         }
         else if (selectedLevel == "2")
         {
 
             level = 2;
-            //SetRandomPass();
-            Terminal.WriteLine("You selected level 2");
+            StartGame();
 
-        }
-        else if (selectedLevel == "menu") {
-            // take back to main menu
-            ShowMainMenu("Welcome Back Hacker!");
-        
         }
         else
         {
@@ -58,56 +53,62 @@ void ShowMainMenu(string greeting) {
 
     void OnUserInput(string input) {
 
-        if (currentScreen == "MainMenu") {
-            // set the level by userinput
+        if (input == "menu")
+        {
+            ShowMainMenu("Welcome Back Hacker.");
+            currentScreen = "MainMenu";
+            password = null;
+        }
+        else if (currentScreen == "MainMenu")
+        {
+
             SetLevel(input);
 
         }
         else if (currentScreen == "password") {
-            // checks user input
-           // CheckPassword(input);
+            CheckPassword(input);
         }
-
 
     }
 
 
-   /* void StartGame() {
-
-        Terminal.WriteLine("You have selected level: " + level + ". Play now!");
+    void StartGame() {
         currentScreen = "password";
+        Terminal.WriteLine("You have selected level: " + level + ". Hack now!");
+        SetRandomPass();
+    }
+
+    void CheckPassword(string userInput)
+    {
+        if (userInput == password)
+        {
+            Terminal.WriteLine("you won!");
+            Terminal.WriteLine("Type menu to go back to the main menu winner!");
+        }
+        else
+        {
+            Terminal.WriteLine("wrong input :( check again or go to menu");
+        }
     }
 
     void SetRandomPass()
     {
 
-        StartGame();
-
         switch (level)
         {
-
             case 1:
-                testPass = "safe";
+                password = level1Pass[Random.Range(0, level1Pass.Length)];
                 break;
             case 2:
-                testPass = "safe";
+                password = level2Pass[Random.Range(0, level2Pass.Length)];
                 break;
-
             default:
                 break;
-
         }
+        Terminal.WriteLine(password.Anagram());
 
     }
 
 
-    void CheckPassword(string userInput) {
-        if (userInput == testPass)
-        {
-            Terminal.WriteLine("you won!");
-        }
-        else {
-            Terminal.WriteLine("wrong input :(");
-        }
-    } */
+
 }
